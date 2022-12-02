@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Resources\Day1_Puzzle1_Input.txt">
+    <None Update="Resources\Day1_Puzzle_Input.txt">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
   </ItemGroup>

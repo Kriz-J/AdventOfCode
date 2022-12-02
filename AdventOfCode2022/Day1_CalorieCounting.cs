@@ -2,9 +2,9 @@
 
 public class Day1_CalorieCounting
 {
-    public static void Puzzle1()
+    public static void Part1And2()
     {
-        var inputData = File.ReadAllLines(@"..\..\..\Resources\Day1_Puzzle1_Input.txt");
+        var inputData = File.ReadAllLines(@"..\..\..\Resources\Day1_Puzzle_Input.txt");
 
         var elvesCalories = new List<int>();
 
