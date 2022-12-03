@@ -22,7 +22,7 @@ var classType = Type.GetType(classFullName);
 if (classType == null) return;
 
 // get available methods (puzzles) of that class (day)
-var puzzles = classType.GetMethods(BindingFlags.Public | BindingFlags.Static).ToList();
+var puzzles = classType.GetMethods().Where(m => !m.IsSpecialName && m.IsStatic).ToList();
 
 Console.WriteLine(@$"Select which puzzle (1-{puzzles.Count}):");
 
