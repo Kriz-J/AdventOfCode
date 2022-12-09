@@ -128,7 +128,7 @@ public class Day7_NoSpaceLeftOnDevice
 
         var deletionDirectory = deletionDirectories
             .OrderBy(d => d.Size)
-            .FirstOrDefault(d => d.Size > directorySizeNecessaryToDelete);
+            .FirstOrDefault(d => d.Size > directorySizeNecessaryToDelete) ?? fileSystem[0];
 
         Console.WriteLine($@"The answer to the second puzzle is {deletionDirectory.Size}");
     }
