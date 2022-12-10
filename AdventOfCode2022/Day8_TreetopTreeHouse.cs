@@ -8,7 +8,7 @@ public class Day8_TreetopTreeHouse
     private static readonly int NumberOfTreeColumns = TreeHeightMap.First().Length;
     public static int HiddenTrees { get; set; }
 
-    public static void Part1()
+    public static void Part1And2()
     {
         var trees = new int[NumberOfTreeRows, NumberOfTreeColumns];
         var scenicScores = new int[NumberOfTreeRows, NumberOfTreeColumns];
