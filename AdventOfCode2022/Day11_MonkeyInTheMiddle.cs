@@ -154,7 +154,7 @@ public class Day11_MonkeyInTheMiddle
                         if(worryRelief > 1)
                             itemWorryLevel /= worryRelief;
                         else
-                            itemWorryLevel %= modulus; // = 11 * 19 * 5 * 2 * 13 * 7 * 3 * 17
+                            itemWorryLevel %= modulus;
 
                         if (itemWorryLevel % monkey.TestValue == 0)
                             Monkeys[monkey.Targets[0]].Items.Enqueue(itemWorryLevel);
