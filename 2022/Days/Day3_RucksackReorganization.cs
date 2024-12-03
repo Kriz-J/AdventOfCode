@@ -1,4 +1,4 @@
-﻿namespace AdventOfCode2022;
+﻿namespace Days;
 
 public class Day3_RucksackReorganization
 {

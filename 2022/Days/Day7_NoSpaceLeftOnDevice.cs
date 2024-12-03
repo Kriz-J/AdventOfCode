@@ -1,4 +1,4 @@
-﻿namespace AdventOfCode2022;
+﻿namespace Days;
 
 public class Day7_NoSpaceLeftOnDevice
 {
@@ -9,7 +9,7 @@ public class Day7_NoSpaceLeftOnDevice
         public string Name { get; }
         public bool IsDirectory { get; }
         public Node? Parent { get; }
-        public List<Node>? Children { get;}
+        public List<Node>? Children { get; }
         public int Size { get; set; }
 
         public Node(string name, bool isDirectory, Node? parent)
@@ -60,7 +60,7 @@ public class Day7_NoSpaceLeftOnDevice
                             break;
 
                         default: // enter a directory
-                            if (currentDirectory is null) 
+                            if (currentDirectory is null)
                                 throw new Exception("Root has not been initialized.");
 
                             if (currentDirectory.Children is null)
@@ -77,7 +77,7 @@ public class Day7_NoSpaceLeftOnDevice
                 case "dir": //directory exists in current directory
                     if (currentDirectory is null)
                         throw new Exception("Can't add child without parent.");
-                    
+
                     if (currentDirectory.Children is null)
                         throw new Exception($"Not possible to add child to '{currentDirectory}'.");
 
@@ -144,7 +144,7 @@ public class Day7_NoSpaceLeftOnDevice
             {
                 directories.Add(child);
             }
-            
+
             FindDirectoriesFromNodeSmallerOrEqualThan(directorySize, child, directories);
         }
     }

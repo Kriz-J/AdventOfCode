@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace AdventOfCode2022;
+namespace Days;
 
 public class Day11_MonkeyInTheMiddle
 {
@@ -26,7 +26,7 @@ public class Day11_MonkeyInTheMiddle
         const int worryRelief = 3;
 
         PlayKeepAway(Monkeys, numberOfRounds, worryRelief);
-        
+
         var twoMostActiveMonkeys = Monkeys
             .OrderByDescending(i => i.NumberOfItemInspections)
             .Select(i => i.NumberOfItemInspections)
@@ -128,7 +128,7 @@ public class Day11_MonkeyInTheMiddle
     {
         if (!int.TryParse(Regex.Matches(line, regex)[0].Value, out var returnValue))
             throw new Exception(exceptionMessage);
-        
+
         return returnValue;
     }
 
@@ -150,8 +150,8 @@ public class Day11_MonkeyInTheMiddle
                             itemWorryLevel += monkey.OperatorValue == 0 ? itemWorryLevel : monkey.OperatorValue;
                         else if (monkey.Operator == "*")
                             itemWorryLevel *= monkey.OperatorValue == 0 ? itemWorryLevel : monkey.OperatorValue;
-                        
-                        if(worryRelief > 1)
+
+                        if (worryRelief > 1)
                             itemWorryLevel /= worryRelief;
                         else
                             itemWorryLevel %= modulus;

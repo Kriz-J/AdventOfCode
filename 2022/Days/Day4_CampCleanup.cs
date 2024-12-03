@@ -1,4 +1,4 @@
-﻿namespace AdventOfCode2022;
+﻿namespace Days;
 
 public class Day4_CampCleanup
 {
@@ -18,7 +18,7 @@ public class Day4_CampCleanup
 
             if (firstElfSections.IsSupersetOf(secondElfSections))
                 FullyContainedRanges++;
-            else if(firstElfSections.IsSubsetOf(secondElfSections))
+            else if (firstElfSections.IsSubsetOf(secondElfSections))
                 FullyContainedRanges++;
 
             if (firstElfSections.Intersect(secondElfSections).Any())

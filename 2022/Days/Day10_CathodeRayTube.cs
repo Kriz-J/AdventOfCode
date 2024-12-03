@@ -1,4 +1,4 @@
-﻿namespace AdventOfCode2022;
+﻿namespace Days;
 
 public class Day10_CathodeRayTube
 {
@@ -6,8 +6,8 @@ public class Day10_CathodeRayTube
 
     public static int Cycle { get; set; }
     public static int xRegister { get; set; } = 1;
-    public static Dictionary<int,int> SignalStrength { get; set; } = new();
-    public static char[] CRTScreen { get; set; } = new char[6*40];
+    public static Dictionary<int, int> SignalStrength { get; set; } = new();
+    public static char[] CRTScreen { get; set; } = new char[6 * 40];
     public static int DrawPosition { get; set; }
     public static int[] SpritePosition { get; set; } = new int[3];
 
@@ -40,21 +40,21 @@ public class Day10_CathodeRayTube
 
                 default:
                     throw new Exception($"Operation {operation} not supported.");
-            }            
+            }
 
         }
 
         var sumOfKeySignalStrengths = SignalStrength
-            .Where(i => i.Key % 20 == 0 && (i.Key / 20) % 2 != 0)
+            .Where(i => i.Key % 20 == 0 && i.Key / 20 % 2 != 0)
             .Sum(i => i.Value);
 
         Console.WriteLine(@$"The answer to the first puzzle is: {sumOfKeySignalStrengths}");
-        
+
         Console.WriteLine(@$"The answer to the second puzzle is:");
         for (int i = 0; i < CRTScreen.Length; i++)
         {
             Console.Write(CRTScreen[i]);
-            if((i + 1) % 40 == 0)
+            if ((i + 1) % 40 == 0)
                 Console.WriteLine();
         }
     }

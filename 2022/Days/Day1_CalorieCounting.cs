@@ -1,4 +1,4 @@
-﻿namespace AdventOfCode2022;
+﻿namespace Days;
 
 public class Day1_CalorieCounting
 {
@@ -9,7 +9,7 @@ public class Day1_CalorieCounting
         var elvesCalories = new List<int>();
 
         var elfCalories = 0;
-        
+
         foreach (var row in inputData)
         {
 
@@ -27,7 +27,7 @@ public class Day1_CalorieCounting
 
             elfCalories += itemCalories;
         }
-        
+
         Console.WriteLine(@$"The answer to the first puzzle is: {elvesCalories.Max()}");
         Console.WriteLine(@$"The answer to the second puzzle is: {elvesCalories.OrderByDescending(e => e).Take(3).Sum()}");
     }

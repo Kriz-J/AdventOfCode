@@ -1,10 +1,10 @@
-﻿namespace AdventOfCode2022;
+﻿namespace Days;
 
 public class Day12_HillClimbingAlgorithm
 {
     public class Node
     {
-        public string Name { get;}
+        public string Name { get; }
         public char Elevation { get; set; }
         public List<Node> Neighbours { get; set; } = new();
         public bool Visited { get; set; }
@@ -16,7 +16,7 @@ public class Day12_HillClimbingAlgorithm
             Elevation = elevation;
         }
     }
-    
+
     public static string[] HeightMap { get; set; } = File.ReadAllLines(@"..\..\..\Resources\Day12_Puzzle_Input.txt");
     public static int MapHeight = HeightMap.Length;
     public static int MapWidth = HeightMap[0].Length;
@@ -29,9 +29,9 @@ public class Day12_HillClimbingAlgorithm
 
         var startNode = Nodes.Find(n => n.Elevation == (char)('a' - 1));
         var endNode = Nodes.Find(n => n.Elevation == (char)('z' + 1));
-        
+
         var routeLength = BreadthFirstSearchReturnRouteLength(startNode, endNode);
-        
+
         Console.WriteLine(@$"The answer to the first puzzle is {routeLength}");
     }
 
@@ -62,7 +62,7 @@ public class Day12_HillClimbingAlgorithm
     }
 
     private static int BreadthFirstSearchReturnRouteLength(Node start, Node end)
-    { 
+    {
         var queue = new Queue<Node>();
 
         start.Visited = true;
@@ -102,7 +102,7 @@ public class Day12_HillClimbingAlgorithm
 
         return route.Count - 1; // one less step than nodes
     }
-    
+
     private static void CreateNodesFromHeightMap()
     {
         for (int i = 0; i < MapHeight; i++)
@@ -139,7 +139,7 @@ public class Day12_HillClimbingAlgorithm
             }
         }
     }
-    
+
     private static void CheckWest(int xPos, int yPos)
     {
         var currentNode = Nodes[yPos * MapWidth + xPos];
@@ -151,7 +151,7 @@ public class Day12_HillClimbingAlgorithm
     private static void CheckEast(int xPos, int yPos)
     {
         var currentNode = Nodes[yPos * MapWidth + xPos];
-        var eastNode = Nodes[yPos * MapWidth + (xPos + 1)];
+        var eastNode = Nodes[yPos * MapWidth + xPos + 1];
 
         CheckDirection(currentNode, eastNode);
     }

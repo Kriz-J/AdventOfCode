@@ -1,4 +1,4 @@
-﻿namespace AdventOfCode2022;
+﻿namespace Days;
 
 public class Day9_RopeBridge
 {
@@ -27,13 +27,17 @@ public class Day9_RopeBridge
             {
                 switch (direction)
                 {
-                    case "R": KnotPositions[0, 0]++;
+                    case "R":
+                        KnotPositions[0, 0]++;
                         break;
-                    case "L": KnotPositions[0, 0]--;
+                    case "L":
+                        KnotPositions[0, 0]--;
                         break;
-                    case "U": KnotPositions[0, 1]++;
+                    case "U":
+                        KnotPositions[0, 1]++;
                         break;
-                    case "D": KnotPositions[0, 1]--;
+                    case "D":
+                        KnotPositions[0, 1]--;
                         break;
                     default:
                         throw new Exception("Direction not supported.");
@@ -70,14 +74,14 @@ public class Day9_RopeBridge
         var xTrailing = KnotPositions[trailingKnot, 0];
         var yTrailing = KnotPositions[trailingKnot, 1];
 
-        if ((Math.Abs(xLeading - xTrailing) > 0 && Math.Abs(yLeading - yTrailing) > 1) || 
-            (Math.Abs(xLeading - xTrailing) > 1 && Math.Abs(yLeading - yTrailing) > 0))
+        if (Math.Abs(xLeading - xTrailing) > 0 && Math.Abs(yLeading - yTrailing) > 1 ||
+            Math.Abs(xLeading - xTrailing) > 1 && Math.Abs(yLeading - yTrailing) > 0)
         {
             if (xLeading > xTrailing)
                 xTrailing++;
             if (xLeading < xTrailing)
                 xTrailing--;
-            
+
             if (yLeading > yTrailing)
                 yTrailing++;
             if (yLeading < yTrailing)
@@ -105,7 +109,7 @@ public class Day9_RopeBridge
 
         KnotPositions[trailingKnot, 0] = xTrailing;
         KnotPositions[trailingKnot, 1] = yTrailing;
-        
+
         UniquePositionsOfKnots[trailingKnot].Add($"{xTrailing},{yTrailing}");
     }
 }

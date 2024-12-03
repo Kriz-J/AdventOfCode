@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using System.Text.RegularExpressions;
 
-namespace AdventOfCode2022;
+namespace Days;
 
 public class Day5_SupplyStacks
 {
@@ -10,7 +10,7 @@ public class Day5_SupplyStacks
     public static void Part1()
     {
         var idxBreak = FindOperationsStartIndex(instructions);
-        
+
         var startingPositions = instructions[..(idxBreak - 1)];
         var craneOperations = instructions[idxBreak..];
 
