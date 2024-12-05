@@ -58,7 +58,7 @@ public static class SantasLittleHelpers
             }
         }
 
-        throw new ArgumentOutOfRangeException("", "Invalid Selection.");
+        return -1;
     }
 
     public static void DisplayOptions(string message, IEnumerable<string> options, out (int Left, int Top) cursorPosition)
