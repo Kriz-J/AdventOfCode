@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.IO;
+using System.Reflection;
 
 namespace Advent2024;
 
@@ -20,6 +21,32 @@ public static class SantasLittleHelpers
             Console.WriteLine(e.Message);
             throw;
         }
+    }
+
+    public static string[] ReadFileRows(string file)
+    {
+        var path = $@"..\..\..\Input\{file}";
+
+        try
+        {
+            return File.ReadAllLines(path);
+        }
+        catch (IOException e)
+        {
+            Console.WriteLine($"The file {path} could not be read.");
+            Console.WriteLine(e.Message);
+            throw;
+        }
+    }
+
+    public static int ParseInt(string input)
+    {
+        if (!int.TryParse(input, out var integer))
+        {
+            Console.WriteLine($"The string {input} could not be parsed to int.");
+        }
+
+        return integer;
     }
 
     public static int ParseAndValidateSelection(int upperBound)
