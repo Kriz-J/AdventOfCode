@@ -12,7 +12,7 @@ Console.SetCursorPosition(cursorPosition.Left, cursorPosition.Top);
 var selectedDay = SantasLittleHelpers.ParseAndValidateSelection(upperBound: days.Count);
 if (selectedDay == -1) return;
 
-Console.WriteLine();
+Console.SetCursorPosition(0, cursorPosition.Top + days.Count + 2);
 
 var day = days[selectedDay];
 var puzzles = SantasLittleHelpers.GetAvailablePuzzles(day);
@@ -27,8 +27,6 @@ Console.SetCursorPosition(cursorPosition.Left, cursorPosition.Top);
 var selectedPuzzle = SantasLittleHelpers.ParseAndValidateSelection(upperBound: puzzles.Count);
 if (selectedPuzzle == -1) return;
 
-Console.WriteLine();
+Console.SetCursorPosition(0, cursorPosition.Top + puzzles.Count + 2);
 
 puzzles[selectedPuzzle].Invoke(null, null);
-
-Console.WriteLine();
