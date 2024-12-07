@@ -2,9 +2,9 @@
 
 public class Day01_HistorianHysteria
 {
-    public string[] Input { get; set; } = SantasLittleHelpers.ReadFileRows("2024-12-01.txt");
+    public static string[] Input { get; set; } = SantasLittleHelpers.ReadFileRows("2024-12-01.txt");
 
-    public void Puzzle1()
+    public static void Puzzle1()
     {
         var (left, right) = CreateSortedLists();
 
@@ -15,7 +15,7 @@ public class Day01_HistorianHysteria
         Console.WriteLine($"Answer: Total distance between the lists is {totalDistance}.");
     }
 
-    public void Puzzle2()
+    public static void Puzzle2()
     {
         var (left, right) = CreateSortedLists();
 
@@ -26,11 +26,11 @@ public class Day01_HistorianHysteria
         Console.WriteLine($"Answer: Total similarity of the lists is {totalSimilarity}.");
     }
 
-    private (List<int> Left, List<int> Right) CreateSortedLists()
+    private static  (List<int> Left, List<int> Right) CreateSortedLists()
     {
         var locationIDs = Input
             .SelectMany(row => row.Split("   "))
-            .Select(SantasLittleHelpers.ParseInt)
+            .Select(int.Parse)
             .ToList();
 
         var (left, right) = PartitionList(locationIDs);

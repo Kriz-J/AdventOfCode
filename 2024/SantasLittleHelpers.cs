@@ -38,16 +38,6 @@ public static class SantasLittleHelpers
         }
     }
 
-    public static int ParseInt(string input)
-    {
-        if (!int.TryParse(input, out var integer))
-        {
-            Console.WriteLine($"The string {input} could not be parsed to int.");
-        }
-
-        return integer;
-    }
-
     public static int ParseAndValidateSelection(int upperBound)
     {
         if (int.TryParse(Console.ReadLine(), out var selection))
