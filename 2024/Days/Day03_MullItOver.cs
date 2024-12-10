@@ -52,6 +52,6 @@ public class Day03_MullItOver
             }
         }
 
-        Console.WriteLine($"Answer: The sum of all multiplications is {mulSum}"); //62098619
+        Console.WriteLine($"Answer: The sum of all multiplications is {mulSum}");
     }
 }
