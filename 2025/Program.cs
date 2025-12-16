@@ -1,4 +1,5 @@
-﻿using Advent2025;
+﻿using System.Diagnostics;
+using Advent2025;
 
 var days = SantasLittleHelpers.GetAvailableDays();
 if (!days.Any())
@@ -35,4 +36,8 @@ if (selectedPuzzle == -1)
     return;
 }
 
+var stopwatch = new Stopwatch();
+stopwatch.Start();
 puzzles[selectedPuzzle].Invoke(null, null);
+stopwatch.Stop();
+Console.WriteLine($"Puzzle completed in {stopwatch.ElapsedMilliseconds} ms.");
