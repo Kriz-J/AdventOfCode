@@ -129,5 +129,3 @@ public static class Day05_Cafeteria
         return false;
     }
 }
-
-//350684792662845
