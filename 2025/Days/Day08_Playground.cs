@@ -27,11 +27,11 @@ public static class Day08_Playground
 
         for (int i = 0; i < junctionBoxPositions.Length; i++)
         {
-            var shortestConnection = OrderedJunctionBoxDistances.First();
-            OrderedJunctionBoxDistances.Remove(shortestConnection.Key);
+            var shortestConnection = OrderedJunctionBoxDistances.First().Key;
+            OrderedJunctionBoxDistances.Remove(shortestConnection);
 
-            var junctionBox1 = shortestConnection.Key.P1;
-            var junctionBox2 = shortestConnection.Key.P2;
+            var junctionBox1 = shortestConnection.P1;
+            var junctionBox2 = shortestConnection.P2;
 
             GroupJunctionBoxes(junctionBox1, junctionBox2);
         }
@@ -58,20 +58,20 @@ public static class Day08_Playground
             Circuits.Add(position, [position]);
         }
 
-        KeyValuePair<(Position P1, Position P2), long> shortestConnection;
+        (Position P1, Position P2) shortestConnection;
         do
         {
-            shortestConnection = OrderedJunctionBoxDistances.First();
-            OrderedJunctionBoxDistances.Remove(shortestConnection.Key);
+            shortestConnection = OrderedJunctionBoxDistances.First().Key;
+            OrderedJunctionBoxDistances.Remove(shortestConnection);
 
-            var junctionBox1 = shortestConnection.Key.P1;
-            var junctionBox2 = shortestConnection.Key.P2;
+            var junctionBox1 = shortestConnection.P1;
+            var junctionBox2 = shortestConnection.P2;
 
             GroupJunctionBoxes(junctionBox1, junctionBox2);
 
         } while (Circuits.Count > 1);
 
-        var distanceFromWall = (long)shortestConnection.Key.P1.x * shortestConnection.Key.P2.x;
+        var distanceFromWall = (long)shortestConnection.P1.x * shortestConnection.P2.x;
 
         Console.WriteLine($"Answer: Distance from wall {distanceFromWall}.");
     }
