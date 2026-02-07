@@ -40,4 +40,5 @@ var stopwatch = new Stopwatch();
 stopwatch.Start();
 puzzles[selectedPuzzle].Invoke(null, null);
 stopwatch.Stop();
-Console.WriteLine($"Puzzle completed in {stopwatch.ElapsedMilliseconds} ms.");
+var microseconds = 1_000_000.0 * (1.0 * stopwatch.ElapsedTicks / Stopwatch.Frequency);
+Console.WriteLine($"Puzzle completed in {microseconds:N2} µs.");

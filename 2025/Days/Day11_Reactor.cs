@@ -1,10 +1,10 @@
-﻿using Device = (string Name, int Depth);
-
-namespace Advent2025.Days;
+﻿namespace Advent2025.Days;
 
 public class Day11_Reactor
 {
     private static readonly string[] Input = SantasLittleHelpers.ReadFileRows("2025-12-11.txt");
+
+    private static readonly Dictionary<(string, bool, bool), long> DevicePathCache = [];
 
     public static void Puzzle1()
     {
@@ -33,8 +33,8 @@ public class Day11_Reactor
             {
                 toVisit.Push(connection);
             }
-        } // 172 728 388 596 569
-          // 380 961 604 031 372
+        }
+
         Console.WriteLine($"Answer: The total number of paths from 'you' to 'out': {total}");
     }
 
@@ -42,135 +42,31 @@ public class Day11_Reactor
     {
         var devices = ParseInput();
 
-        var depthsOfDevices = FindDepthOfDevicesDacAndFft(devices);
+        var total = PathsFromDeviceThroughFftAndDac("svr", devices);
 
-        var pathsToDevice = new Dictionary<string, long>();
+        Console.WriteLine($"Answer: The total number of paths from 'svr' to 'out' through 'fft' and 'dac': {total}");
+    }
 
-        var firstDeviceDepth = Math.Min(depthsOfDevices["dac"], depthsOfDevices["fft"]);
-        var secondDeviceDepth = Math.Max(depthsOfDevices["dac"], depthsOfDevices["fft"]);
-        var firstDeviceName = firstDeviceDepth == depthsOfDevices["dac"] ? "dac" : "fft";
-        var secondDeviceName = secondDeviceDepth == depthsOfDevices["dac"] ? "dac" : "fft";
+    private static long PathsFromDeviceThroughFftAndDac(string device, Dictionary<string, List<string>> devices, bool passedFft = false, bool passedDac = false)
+    {
+        passedFft = passedFft || device == "fft";
+        passedDac = passedDac || device == "dac";
 
-        var currentDevice = "svr";
-        var currentDepth = 0;
-
-        pathsToDevice[currentDevice] = 1;
-        
-        var toVisit = new Stack<Device>();
-        var currentPath = new List<Device> { (currentDevice, currentDepth) };
-
-        foreach (var connection in devices[currentDevice])
+        if (device == "out")
         {
-            toVisit.Push((connection, currentDepth + 1));
-
-            if (pathsToDevice.ContainsKey(connection))
-            {
-                pathsToDevice[connection] += pathsToDevice[currentDevice];
-            }
-            else
-            {
-                pathsToDevice[connection] = pathsToDevice[currentDevice];
-            }
+            return (passedFft && passedDac) ? 1 : 0;
         }
 
-        var total = 0;
-        while (toVisit.Count > 0)
+        if (DevicePathCache.TryGetValue((device, passedFft, passedDac), out var cachedValue))
         {
-            (currentDevice, currentDepth) = toVisit.Pop();
-
-            if (currentDepth == firstDeviceDepth && currentDevice != firstDeviceName)
-            {
-                //currentPath.RemoveAll(d => d.Depth >= toVisit.Peek().Depth);
-                //continue;
-
-                if (toVisit.TryPeek(out var nextDepth))
-                {
-                    currentPath.RemoveAll(d => d.Depth >= nextDepth.Depth);
-                    continue;
-                }
-
-                break;
-            }
-
-            if (currentDepth == secondDeviceDepth && currentDevice != secondDeviceName)
-            {
-                if (toVisit.TryPeek(out var nextDepth))
-                {
-                    currentPath.RemoveAll(d => d.Depth >= nextDepth.Depth);
-                    continue;
-                }
-
-                break;
-            }
-            
-            if (currentPath.Any(d => d.Depth >= currentDepth))
-            {
-                currentPath.RemoveAll(d => d.Depth >= currentDepth);
-            }
-            currentPath.Add((currentDevice, currentDepth));
-
-            foreach (var device in currentPath)
-            {
-                Console.Write($"{device.Name}:{device.Depth},");
-            }
-            Console.WriteLine();
-
-            if (currentDevice == "fft")
-            {
-                if (currentPath.Any(d => d.Name == "fft") && currentPath.Any(d => d.Name == "dac"))
-                {
-                    total++;
-                }
-
-                currentPath.Remove((currentDevice, currentDepth));
-                continue;
-            }
-
-            if (devices[currentDevice].Contains(firstDeviceName))
-            {
-                toVisit.Push((firstDeviceName, currentDepth + 1));
-
-                if (pathsToDevice.ContainsKey(firstDeviceName))
-                {
-                    pathsToDevice[firstDeviceName] += pathsToDevice[currentDevice];
-                }
-                else
-                {
-                    pathsToDevice[firstDeviceName] = pathsToDevice[currentDevice];
-                }
-            }
-            else if (devices[currentDevice].Contains(secondDeviceName))
-            {
-                toVisit.Push((secondDeviceName, currentDepth + 1));
-
-                if (pathsToDevice.ContainsKey(secondDeviceName))
-                {
-                    pathsToDevice[secondDeviceName] += pathsToDevice[currentDevice];
-                }
-                else
-                {
-                    pathsToDevice[secondDeviceName] = pathsToDevice[currentDevice];
-                }
-            }
-            else
-            {
-                foreach (var connection in devices[currentDevice])
-                {
-                    toVisit.Push((connection, currentDepth + 1));
-
-                    if (pathsToDevice.ContainsKey(connection))
-                    {
-                        pathsToDevice[connection] += pathsToDevice[currentDevice];
-                    }
-                    else
-                    {
-                        pathsToDevice[connection] = pathsToDevice[currentDevice];
-                    }
-                }
-            }
+            return cachedValue;
         }
 
-        Console.WriteLine($"Answer: The total number of paths from 'svr' to 'out': {total}");
+        var paths = devices[device].Sum(connectedDevice => PathsFromDeviceThroughFftAndDac(connectedDevice, devices, passedFft, passedDac));
+
+        DevicePathCache[(device, passedFft, passedDac)] = paths;
+
+        return paths;
     }
 
     private static Dictionary<string, List<string>> ParseInput()
@@ -191,51 +87,5 @@ public class Day11_Reactor
         }
 
         return devices;
-    }
-
-    private static Dictionary<string, int> FindDepthOfDevicesDacAndFft(Dictionary<string, List<string>> devices)
-    {
-        var depths = new Dictionary<string, int>();
-
-        var currentDevice = "svr";
-        var currentDepth = 0;
-
-        depths[currentDevice] = currentDepth;
-
-        var toVisit = new Queue<Device>();
-
-        foreach (var connection in devices[currentDevice])
-        {
-            toVisit.Enqueue((connection, currentDepth + 1));
-        }
-
-        while (toVisit.Count > 0)
-        {
-            (currentDevice, currentDepth) = toVisit.Dequeue();
-
-            if (!depths.TryAdd(currentDevice, currentDepth))
-            {
-                continue;
-            }
-
-            //Console.WriteLine($"{currentDevice}:{currentDepth}");
-
-            if (depths.ContainsKey("dac") && depths.ContainsKey("fft"))
-            {
-                break;
-            }
-
-            if (currentDevice == "out")
-            {
-                continue;
-            }
-
-            foreach (var connection in devices[currentDevice])
-            {
-                toVisit.Enqueue((connection, currentDepth + 1));
-            }
-        }
-
-        return depths;
     }
 }
